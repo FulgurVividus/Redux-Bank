@@ -1,0 +1,79 @@
+#1. The structure for Redux:
+
+                    'folder_1' => 'folder_1Slice'
+'features' folder => 
+                    'folder_2' => 'folder_2Slice'
+
+#2. in the 'store.js' file:
+All of the stuff in one, just for learning purpose.
+
+#3. in the 'store-v2.js' file:
+The old version id divided into Slices and placed in separate folders and files. 
+'store-v2.js' file imports necessary parts. This file is the only place where Redux is used, so we can combine our reducers and then create the 'store'. At the end, we export this 'store', so we can inject it into React Application.
+
+#4. Packages:
+npm i redux
+npm i react-redux (with this package, React app and Redux can talk)
+
+The way of communication in index.js file. Similar to Context API implementation.
+
+store={our_redux_store} - with this we connect successfully. And now every single component in the application can read data from the 'store' and dispatch actions to it.
+
+Example: index.js file
+
+#5. useSelector():
+In order to read data from Redux 'store', use useSelector() hook provided by Redux.
+Takes a callback function and this function takes a single argument the entire Redux 'store'
+
+Whenever store changes, then the component that is subscribed to that store will re-render.
+
+Example: Customer.js file
+
+#6. useDispatch():
+To dispatch an action in React application. It will return dispatch function, provided by react-redux. Works in the same way as before.
+
+Example: CreateCustomer.js file
+
+#7. Connect API:
+Before hooks existed, we had to use the Connect API. You could see this in older codes.
+
+Example: BalanceDisplay.js file
+
+#8. Steps for Middleware Thunks:
+Three steps:
+1. install middleware package => npm i redux-thunk
+2. apply that middleware to the store
+3. use the middleware in our Action Creator functions
+
+applyMiddleware(thunk) - with this, we told to React to use 'thunk' middleware in the application.
+
+When we are using Thunks, we instead off returning an action object from the Action Creator function, we return a new function. And Redux when it sees, that we are dispatching a function, it'll call that function and into that function it will pass in 'dispatch' and 'getState' (accountSlice.js). Then we can use that 'dispatch' to delay that dispatching until asynchronous operation that we want to implement has finished. Therefore, we can think of this function sitting between the initial dispatching and reducer in the store receiving the action.
+
+Example: store-v2.js file, then accountSlice.js file and some visual stuff in AccountOperations.js
+
+#9. Installing Redux Dev Tools:
+Three steps:
+1. Install Google Chrome extension
+2. Install corresponding npm package => npm i @redux-devtools/extension, in store-v2.js
+3. Use it in the browser
+
+#10. Redux Toolkit:
+Install => npm i @reduxjs/toolkit
+
+configureStore - wraps 'createStore' and adds some more functionalities. Does automatically combine reducers, automatically adds 'thunk' middleware, automatically sets Dev Tools...
+
+Example: store-v3.js file
+
+#11. Redux Toolkit in practice:
+createSlice - gives 3 big benefits
+1. automatically creates Action Creator functions from the reducers
+2. makes writing reducers a lot easier (no switch cases and default)
+3. can mutate the state insider reducers
+
+Behind the scenes, it uses 'Immer' library that will convert the logic back to immutable logic.
+
+Example: accountSlice.js file
+
+#12. Files usage Redux:
+accountSlice.js file - Redux Toolkit
+customerSlice.js - Redux
